@@ -6397,6 +6397,7 @@ LGraphNode.prototype.executeAction = function(action)
         //fps counting
         var now = LiteGraph.getTime();
         this.render_time = (now - this.last_draw_time) * 0.001;
+	console.log((now - this.last_draw_time))
 	if ((now - this.last_draw_time) > 100) {
 		this.last_draw_time = now;
 
