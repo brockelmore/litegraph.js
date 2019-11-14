@@ -4368,7 +4368,8 @@ LGraphNode.prototype.executeAction = function(action)
         this.editor_alpha = 1; //used for transition
         this.pause_rendering = false;
         this.clear_background = true;
-
+	this.lastScrollTime = (new Date()).getTime();
+	    
 		this.read_only = false; //if set to true users cannot modify the graph
         this.render_only_selected = true;
         this.live_mode = false;
@@ -5713,6 +5714,7 @@ LGraphNode.prototype.executeAction = function(action)
     LGraphCanvas.prototype.processMouseWheel = function(e) {
 	var timeOfScroll = (new Date()).getTime();
 	var lastScroll = timeOfScroll - this.lastScrollTime;
+	console.log(lastScroll)
         if (!this.graph || !this.allow_dragcanvas) {
             return;
         }
