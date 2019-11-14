@@ -5711,6 +5711,8 @@ LGraphNode.prototype.executeAction = function(action)
      * @method processMouseWheel
      **/
     LGraphCanvas.prototype.processMouseWheel = function(e) {
+	var timeOfScroll = (new Date()).getTime();
+	var lastScroll = timeOfScroll - this.lastScrollTime;
         if (!this.graph || !this.allow_dragcanvas) {
             return;
         }
@@ -5730,8 +5732,11 @@ LGraphNode.prototype.executeAction = function(action)
         //this.setZoom( scale, [ e.localX, e.localY ] );
         this.ds.changeScale(scale, [e.localX, e.localY]);
 
-        this.graph.change();
-
+	if (lastScroll > 100) {
+	    this.lastScrollTime = timeOfScroll;
+	    this.graph.change();
+	}
+        
         e.preventDefault();
         return false; // prevent default
     };
