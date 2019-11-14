@@ -6397,29 +6397,31 @@ LGraphNode.prototype.executeAction = function(action)
         //fps counting
         var now = LiteGraph.getTime();
         this.render_time = (now - this.last_draw_time) * 0.001;
-        this.last_draw_time = now;
+	if ((now - this.last_draw_time) > 100) {
+		this.last_draw_time = now;
 
-        if (this.graph) {
-            this.ds.computeVisibleArea();
-        }
+		if (this.graph) {
+		    this.ds.computeVisibleArea();
+		}
 
-        if (
-            this.dirty_bgcanvas ||
-            force_bgcanvas ||
-            this.always_render_background ||
-            (this.graph &&
-                this.graph._last_trigger_time &&
-                now - this.graph._last_trigger_time < 1000)
-        ) {
-            this.drawBackCanvas();
-        }
+		if (
+		    this.dirty_bgcanvas ||
+		    force_bgcanvas ||
+		    this.always_render_background ||
+		    (this.graph &&
+			this.graph._last_trigger_time &&
+			now - this.graph._last_trigger_time < 1000)
+		) {
+		    this.drawBackCanvas();
+		}
 
-        if (this.dirty_canvas || force_canvas) {
-            this.drawFrontCanvas();
-        }
+		if (this.dirty_canvas || force_canvas) {
+		    this.drawFrontCanvas();
+		}
 
-        this.fps = this.render_time ? 1.0 / this.render_time : 0;
-        this.frame += 1;
+		this.fps = this.render_time ? 1.0 / this.render_time : 0;
+		this.frame += 1;
+	}
     };
 
     /**
